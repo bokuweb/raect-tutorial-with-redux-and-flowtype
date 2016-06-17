@@ -1,4 +1,8 @@
-export function fetchComments(url) {
+/* @flow */
+
+import type { Comment } from '../types';
+
+export function fetchComments(url: string): Promise<Array<Comment>> {
   return new Promise((resolve, reject) => {
     fetch(url)
       .then(response => response.json())
@@ -7,7 +11,7 @@ export function fetchComments(url) {
   });
 }
 
-export function saveComment(url) {
+export function saveComment(url: string, comment: Comment): Promise<Comment> {
   return new Promise((resolve, reject) => {
     fetch(url, {
       method: 'POST',
@@ -17,6 +21,7 @@ export function saveComment(url) {
       },
       body: JSON.stringify(comment),
     })
+      .then(response => response.json())
       .then(resolve)
       .catch(reject);
   });
